@@ -1,0 +1,40 @@
+{% extends 'logIn_registration/layout.html' %} {% block content %}
+<header>
+    <a href='/books'>Home</a>
+    <a href='/logOut'>Logout</a>
+</header>
+<div>
+    <h4>{{book.title}}</h4>
+    <p>Author: {{book.author}}</p>
+    <h3>Reviews:</h3>
+    {%if book.reviews.all%} {%for review in book.reviews%}
+    <div>
+        <p>Rating: ##{{rating}}</p>
+        <p>{{review.user.last_name}}## says: ##{{review.review}}</p>
+        <p>Posted on ##{{review.created_at}}</p>{%if review.user.id == user_id%}
+        <a href='/review/{{review.id}}/destroy'>Delete this Review</a>{%endif%}
+    </div>
+    {%endfor%} {%endif%}
+    <div>
+        <label>Add a review:</label>
+        <form action='/review/create' method='post'>
+            {%csrf_token%}
+            <textarea name='review'></textarea>
+            <p>Rating:
+                <select name='rating'>
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                    <option>5</option>
+        
+                </select>
+                 stars.
+            </p>
+            <input type='hidden' name='user_id' value={{user_id}}>
+            <input type='hidden' name='book_id' value={{book.id}}>
+            <button>Submit Review</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

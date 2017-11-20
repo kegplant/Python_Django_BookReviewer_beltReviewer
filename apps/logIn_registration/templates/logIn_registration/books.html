@@ -1,0 +1,29 @@
+{% extends 'logIn_registration/layout.html' %} {% block content %}
+<p>blah blah blah</p>
+<header>Welcome, ##{{user.last_name}}!
+    <a href='/books/add'>Add Book and Review</a>
+    <a href='/logOut'>Logout</a>
+</header>
+
+
+<p>rating: 
+        <span class='yellow'>{{stars}}</span><span class='white'>{{noStars}}</span>
+</p>
+
+
+{%if reviews%} {%for review in reviews%}
+<h4>
+    <a href='#'>title {{review.book.title}}</a>
+</h4>
+<!-- replace 3 w/ review.rating -->
+<p>rating:
+    <span class='yellow'>{{stars}}</span>
+    <span class='white'>{{noStars}}</span>
+</p>
+<p>
+    <a href='#'>##</a> ###
+</p>
+<p>Posted on ###</p>
+{%endfor%} {%endif%} {%if books%} {%for book in books%}
+<a href='#'>###</a>
+{%endfor%} {%endif%} {% endblock %}

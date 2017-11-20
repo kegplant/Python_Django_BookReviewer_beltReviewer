@@ -1,0 +1,20 @@
+{% extends 'logIn_registration/layout.html' %} {% block content %}
+<header>Welcome, ##{{user.last_name}}!
+    <a href='/books'>Home</a>
+    <a href='/books/add'>Add Book and Review</a>
+    <a href='/logOut'>Logout</a>
+</header>
+<div>
+    <h4>User Alias: {{user.last_name}}</h4>
+    <p>Name: {{user.first_name}}</p>
+    <p>Email: {{user.email}}</p>
+    <p>Total Reviews: ##
+    </p>
+</div>
+<div>
+    <h4>Posted Reviews on the following books:</h4>
+    {%if False%} 
+    {%if False%} 
+    {%endif%} 
+    {%endif%} </div>
+{% endblock %}

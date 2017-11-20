@@ -1,0 +1,35 @@
+{% extends 'logIn_registration/layout.html' %} {% block content %}
+<header>Welcome, ##{{user.first_name}}!
+    <a href='/books/add'>Add Book and Review</a>
+    <a href='/logOut'>Logout</a>
+</header>
+<form action='/books/create' method='post'>
+    {%csrf_token%}
+    
+    
+    <h5>Add a New Book Title and a Review:</h5>
+    <label>Book Title:
+        <input type='text' name='title'>
+    </label>
+    <label>Author:
+        <select name='selectAuthor'>
+            <option>Stephen King</option>
+        </select>
+            <label>Or add a new author: <input type='text' name='typeAuthor'></label>
+        </label>
+        <label>Review:</label>
+        <textarea name='review'></textarea>
+        <label>Rating: 
+            <select name='rating'>
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>                
+            </select>
+             stars.
+        </label>
+        <input type='hidden' name='user_id' value={{user_id}}>
+        <button>Add Book and Review</button>
+</form>
+{% endblock %}
