@@ -1,6 +1,6 @@
 {% extends 'logIn_registration/layout.html' %} {% block content %}
 <header>Welcome, ##{{user.first_name}}!
-    <a href='/books/add'>Add Book and Review</a>
+    <a href='/books'>Home</a>
     <a href='/logOut'>Logout</a>
 </header>
 <form action='/books/create' method='post'>

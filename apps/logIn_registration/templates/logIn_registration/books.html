@@ -1,6 +1,6 @@
 {% extends 'logIn_registration/layout.html' %} {% block content %}
 <p>blah blah blah</p>
-<header>Welcome, ##{{user.last_name}}!
+<header>Welcome, {{name}}!
     <a href='/books/add'>Add Book and Review</a>
     <a href='/logOut'>Logout</a>
 </header>
@@ -13,17 +13,20 @@
 
 {%if reviews%} {%for review in reviews%}
 <h4>
-    <a href='#'>title {{review.book.title}}</a>
+    <a href='/books/{{review.book.id}}'>{{review.book.title}}</a>
 </h4>
 <!-- replace 3 w/ review.rating -->
 <p>rating:
     <span class='yellow'>{{stars}}</span>
     <span class='white'>{{noStars}}</span>
+    {{review.rating}}
 </p>
 <p>
-    <a href='#'>##</a> ###
+    <a href='/users/{{review.user.id}}'>{{review.user.last_name}}</a> says:  {{review.review}}
 </p>
-<p>Posted on ###</p>
+<p>Posted on {{review.created_at}}</p>
 {%endfor%} {%endif%} {%if books%} {%for book in books%}
-<a href='#'>###</a>
+<p>
+<a href='/books/{{book.id}}')>{{book.title}}</a>
+</p>
 {%endfor%} {%endif%} {% endblock %}

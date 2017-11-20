@@ -39,6 +39,15 @@ class BookManager(models.Manager):
     def createBook(self,postData):
         book=self.create(title=postData['title'],author=postData['selectAuthor'])
         return book
+class ReviewManager(models.Manager):
+    def createReview(self,postData):
+        user=Users.objects.get(id=int(postData['user_id']))
+        book=Books.objects.get(id=int(postData['book_id']))
+        print postData['rating']
+        print postData['review']
+        print 'here'
+        review=self.create(user=user,book=book,rating=int(postData['rating']),review=postData['review'])
+        return
 # Create your models here.
 class Users(models.Model):
     first_name=models.CharField(max_length=255)
@@ -60,5 +69,6 @@ class Reviews(models.Model):
     rating=models.IntegerField(max_length=1)
     review=models.TextField()
     created_at=models.DateField(auto_now_add=True)
+    objects=ReviewManager()
 
 

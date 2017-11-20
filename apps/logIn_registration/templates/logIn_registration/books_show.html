@@ -4,14 +4,15 @@
     <a href='/logOut'>Logout</a>
 </header>
 <div>
+    <p>{{user.id}}</p>
     <h4>{{book.title}}</h4>
     <p>Author: {{book.author}}</p>
     <h3>Reviews:</h3>
-    {%if book.reviews.all%} {%for review in book.reviews%}
+    {%if book.reviews.all%} {%for review in book.reviews.all%}
     <div>
-        <p>Rating: ##{{rating}}</p>
-        <p>{{review.user.last_name}}## says: ##{{review.review}}</p>
-        <p>Posted on ##{{review.created_at}}</p>{%if review.user.id == user_id%}
+        <p>Rating: {{review.rating}}</p>
+        <p><a href='users/{{user.id}}'>{{review.user.last_name}}</a> says: {{review.review}}</p>
+        <p>Posted on {{review.created_at}}</p>{%if review.user.id == user.id%}
         <a href='/review/{{review.id}}/destroy'>Delete this Review</a>{%endif%}
     </div>
     {%endfor%} {%endif%}
@@ -25,13 +26,13 @@
                     <option>1</option>
                     <option>2</option>
                     <option>3</option>
-                    <option>4</option>
+                    <option value='4'>4</option>
                     <option>5</option>
         
                 </select>
                  stars.
             </p>
-            <input type='hidden' name='user_id' value={{user_id}}>
+            <input type='hidden' name='user_id' value={{user.id}}>
             <input type='hidden' name='book_id' value={{book.id}}>
             <button>Submit Review</button>
         </form>

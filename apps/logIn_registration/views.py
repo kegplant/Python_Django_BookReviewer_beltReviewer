@@ -68,8 +68,11 @@ def books(request):#but for stars, \/
     if not isLoggedIn(request):
         return redirect('/')
     context={
+        'books':Books.objects.all(),
         'stars':'*'*3,
-        'noStars':'^'*2
+        'noStars':'^'*2,
+        'name':Users.objects.get(id=request.session['user_id']).last_name,
+        'reviews':Reviews.objects.all().order_by('-id')[:3]
     }
     return render(request,'logIn_registration/books.html',context)
 def books_add(request):#finished
@@ -80,16 +83,27 @@ def books_add(request):#finished
     }
     return render(request,'logIn_registration/books_add.html',context)
 def review_create(request):
-    if request.method==POST:
+    if request.method=='POST':
         #validate
-        return HttpResponse('create')
-
-    return redirect('/')
+        print request.POST['rating']
+        print 'here'
+        print request.POST['review']
+        print int(request.POST['user_id'])
+        int(request.POST['book_id'])
+        Reviews.objects.createReview(request.POST)
+        # user=Users.objects.get(id=int(request.POST['user_id']))
+        # book=Books.objects.get(id=int(request.POST['book_id']))
+        # Reviews.objects.create(user=user,book=book,rating=int(request.POST['rating']),review=request.POST['review'])
+        book=Books.objects.get(id=request.POST['book_id'])
+        return redirect('/books/'+str(book.id))
+    return redirect('/books')
 def books_create(request):  #besides validation & review, \/
     if request.method=='POST':
         #validate in views
         #create book \/
         book=Books.objects.createBook(request.POST)
+        user=Users.objects.get(id=int(request.POST['user_id']))
+        Reviews.objects.create(user=user,book=book,rating=int(request.POST['rating']),review=request.POST['review'])
         #also create review
         return redirect('/books/'+str(book.id))
     return redirect('/')
@@ -98,14 +112,21 @@ def books_show(request,book_id):#but for validation, \/
         return redirect('/')
     #check if book_id in range
     context={
-        'book':Books.objects.get(id=book_id)
+        'book':Books.objects.get(id=book_id),
+        'user':Users.objects.get(id=request.session['user_id'])
     }
     return render(request,'logIn_registration/books_show.html',context)
 def review_destroy(request,review_id):
-    if request.method==POST:
-        #validate
-        return HttpResponse('destroy')
-    return redirect('/')    
+    if not isLoggedIn(request):
+        return redirect('/')
+    #validate
+    print review_id
+    review=Reviews.objects.get(id=review_id)
+    print review_id
+    book_id=review.book.id
+    review.delete()
+    print book_id
+    return redirect('/books/'+str(book_id))   
 def users(request,id): #\/
     if not isLoggedIn(request):
         return redirect('/')
