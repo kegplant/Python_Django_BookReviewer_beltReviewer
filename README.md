@@ -1,7 +1,7 @@
 Book Reviewer in Django for Python
 =====================================
 
-Simple app where one can add a book and/or review a book and see other users' reviews.
+Simple app where one can add and/or review a book and see other users' reviews.
 
 
 Motivation
